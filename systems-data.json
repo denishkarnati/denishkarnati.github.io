@@ -1,0 +1,548 @@
+{
+  "wearable-firmware": {
+    "kind": "wearable",
+    "color": "violet",
+    "title": "nRF52 wearable firmware",
+    "eyebrow": "RTOS / BLE / SENSOR ACQUISITION",
+    "focus": "Firmware and host tools for multichannel acquisition, wearable sensor integration, and BLE data streaming.",
+    "skills": [
+      "Embedded C / C++",
+      "Zephyr RTOS",
+      "Interrupts",
+      "SPI / I2C",
+      "BLE GATT",
+      "Python / Bleak"
+    ],
+    "flow": [
+      [
+        "Sensor interfaces",
+        "ADS131M04/M02 ADCs, MAX30208 temperature sensing, BNO080 inertial sensing, and MAX20303 power management form the documented integration context."
+      ],
+      [
+        "Acquisition & RTOS",
+        "Interrupt-driven acquisition coordinates sampling with firmware threads. Timing, sample identity, and bounded buffering make the producer/consumer boundary observable."
+      ],
+      [
+        "BLE transport",
+        "Device identity, battery telemetry, and GATT streaming connect the wearable to host software. In the lab below, MTU and connection interval control an approximate payload budget."
+      ],
+      [
+        "Python host",
+        "Bleak handles connectivity; PySide6 and pyqtgraph support discovery, live visualization, battery monitoring, and CSV recording."
+      ]
+    ],
+    "decisions": [
+      [
+        "Acquisition timing",
+        "A consistent sampling schedule must remain understandable when wireless delivery slows.",
+        "Inspect interrupt cadence and sequence counters independently from host arrival times."
+      ],
+      [
+        "Transport backpressure",
+        "A faster producer cannot be solved by an unbounded queue.",
+        "Measure payload size, connection capacity, queue depth, and the selected overflow policy."
+      ],
+      [
+        "Board observability",
+        "Signal, timing, power, and decoding faults can look similar at the plot.",
+        "Use a scope or logic analyzer at the interface, then compare raw words and decoded host data."
+      ]
+    ],
+    "try": [
+      "Run at 250 Hz with 2 channels. Disconnect BLE: sampling continues while the queue fills.",
+      "Set MTU to 23 and sample rate to 1000 Hz. Inspect capacity, latency, and overflow.",
+      "Restore MTU to 247 and reconnect. Watch the queue drain if transport capacity exceeds production."
+    ],
+    "assumption": "Application-payload budget model. It omits BLE airtime, retransmissions, radio coexistence, and measured hardware performance. Overflow drops the newest frame. The plotted waveform is synthetic and display-decimated.",
+    "labtitle": "Acquisition, buffering & BLE backpressure",
+    "slug": "wearable-firmware",
+    "image": "/images/obsl-armband-device.png",
+    "alt": "OBSL multimodal armband design and physical wearable prototype",
+    "context": "Texas A&M University · Current research engineering",
+    "credit": "Lab platform imagery: Optical Bio-Sensing Laboratory, Texas A&M University View source ↗",
+    "documented": [
+      {
+        "title": "The engineering problem",
+        "paragraphs": [
+          "A wearable sensing system needs more than a sensor reading. Firmware must coordinate interfaces, collect samples at the right time, identify the device, and move data to a host that an engineer can inspect. Those responsibilities cross the boundary between electronics and software.",
+          "At Texas A&M University, my work includes embedded firmware for wearable sensing and biomedical test systems. I use C/C++ with nRF52840 and nRF52832 targets, Zephyr RTOS, and supporting hardware platforms. The lab imagery here provides context for the wearable research; my contribution is firmware, hardware integration, and engineering tools."
+        ]
+      },
+      {
+        "title": "My contribution across the signal chain",
+        "paragraphs": [
+          "My sensor-integration work includes ADS131M04/M02 ADCs, MAX30208 temperature sensing, BNO080 inertial sensing, and MAX20303 power management. SPI, I2C, GPIO, interrupts, and timing all matter when these parts become one acquisition system.",
+          "On the data path, I implement interrupt-driven multichannel acquisition and BLE GATT streaming, including device identification and battery telemetry. On the host, I build Python tools using Bleak, PySide6, and pyqtgraph for device discovery, selection, live plotting, battery monitoring, and CSV recording."
+        ]
+      }
+    ]
+  },
+  "lucid-powertrain": {
+    "kind": "can",
+    "color": "blue",
+    "title": "EV powertrain platform software",
+    "eyebrow": "AUTOSAR / ECU INTEGRATION / VALIDATION",
+    "focus": "Platform drivers, middleware, AUTOSAR integration, on-chip debugging, and automated bench validation at Lucid.",
+    "skills": [
+      "C / C++",
+      "AUTOSAR BSW / RTE / MCAL",
+      "ECU bring-up",
+      "CAN concepts",
+      "Python / Shell",
+      "Fault investigation"
+    ],
+    "flow": [
+      [
+        "Platform drivers",
+        "Documented work covers low-level drivers and middleware for powertrain ECUs, alongside hardware/software integration and debugging."
+      ],
+      [
+        "AUTOSAR integration",
+        "BSW, RTE, and MCAL layers provide the documented software-integration context. The diagram summarizes responsibilities rather than exposing a proprietary architecture."
+      ],
+      [
+        "ECU bring-up & debug",
+        "On-chip inspection, defect triage, code review, and repeatable bench conditions connect an isolated software module to behavior on the target."
+      ],
+      [
+        "Automated validation",
+        "Python and Shell scripts support validation workflows. The interactive model isolates freshness and fault recovery as a public teaching example."
+      ]
+    ],
+    "decisions": [
+      [
+        "Command freshness",
+        "A new demand value is useful only if a valid message reaches the consumer in time.",
+        "Track the age of the last valid frame and a defined timeout threshold."
+      ],
+      [
+        "Fault containment",
+        "Communication loss must produce an explicit state transition.",
+        "Observe a safe/inhibit output, record the reason, and test recovery conditions."
+      ],
+      [
+        "Reproducibility",
+        "An intermittent integration defect needs a repeatable trigger and useful evidence.",
+        "Log sequence, time, validity, state transitions, and the condition used to reproduce the problem."
+      ]
+    ],
+    "try": [
+      "Run the bench, change demand, then pause CAN delivery. Watch the freshness watchdog trip.",
+      "Restore delivery. Three valid frames are required to re-arm this example.",
+      "Increase bus load or corrupt frames. Export the trace and inspect the state transitions."
+    ],
+    "assumption": "Generic communication and watchdog teaching model, not Lucid production logic. Delay is an illustrative bus-load model. Recovery requires three valid frames; no real vehicle or ECU is connected.",
+    "labtitle": "CAN freshness, fault injection & recovery",
+    "slug": "lucid-powertrain",
+    "image": "/images/lucid-software-system.svg",
+    "alt": "Powertrain software workflow: C/C++ platform drivers, AUTOSAR integration, ECU bring-up and debugging, and Python/Shell bench validation with a feedback loop",
+    "context": "Lucid · Embedded Software Engineer · Jan 2024 – Apr 2026",
+    "credit": "High-level engineering workflow based on my documented responsibilities at Lucid. Open full-size diagram ↗",
+    "documented": [
+      {
+        "title": "The role at Lucid",
+        "paragraphs": [
+          "At Lucid, I worked on platform software for electric-vehicle powertrain ECUs. My work covered low-level drivers, middleware, software integration, and debugging at the hardware–software boundary. The role ran from January 2024 to April 2026, following an embedded software engineering internship from August to December 2023.",
+          "The engineering focus was real-time platform behavior: bringing modules together on ECU hardware, resolving integration issues, and supporting validation within automotive development and safety processes."
+        ]
+      },
+      {
+        "title": "From modules to an integrated ECU",
+        "paragraphs": [
+          "I worked across AUTOSAR BSW, RTE, and MCAL layers while integrating platform and application software. My responsibilities included on-chip debugging, code review, and performance-oriented changes to real-time software.",
+          "The important distinction is between a software component that works in isolation and a system that behaves correctly when its dependencies are present on the ECU. Debugging at that boundary requires attention to both the software path and the behavior of the target hardware."
+        ]
+      }
+    ]
+  },
+  "cardiovascular-phantom": {
+    "kind": "phantom",
+    "color": "coral",
+    "title": "Cardiovascular phantom acquisition",
+    "eyebrow": "ADC / DAC / PRESSURE / SIGNAL VERIFICATION",
+    "focus": "Firmware and Python acquisition tools for pressure-monitoring experiments on physical physiological phantom platforms.",
+    "skills": [
+      "Portenta H7",
+      "ADC / DAC",
+      "Pressure sensors",
+      "Level shifting",
+      "Python",
+      "Waveform debugging"
+    ],
+    "flow": [
+      [
+        "Physical test platform",
+        "Anatomical fixtures and pulsatile flow provide repeatable research conditions. The lab photographs show the wider team platform and devices under test."
+      ],
+      [
+        "Electrical interface",
+        "Analog/digital pressure sensing, ADC/DAC interfaces, and level shifting connect the experiment to the Portenta H7 acquisition system."
+      ],
+      [
+        "Firmware acquisition",
+        "Conversion, sample timing, and channel alignment determine what the firmware makes observable to the host."
+      ],
+      [
+        "Host verification",
+        "Python acquisition and plotting, scopes, and logic analyzers support waveform inspection and root-cause debugging."
+      ]
+    ],
+    "decisions": [
+      [
+        "Range and resolution",
+        "A pressure range maps into a finite converter code space.",
+        "Compare full-scale range, ADC resolution, and the reconstructed signal."
+      ],
+      [
+        "Temporal detail",
+        "A low sample rate may hide waveform shape even when the pulse is still visible.",
+        "Compare sampled and reference traces while changing acquisition rate."
+      ],
+      [
+        "Channel alignment",
+        "Different channels may not represent the same instant.",
+        "Inspect timestamping and relative delay before interpreting channel differences."
+      ]
+    ],
+    "try": [
+      "Run at 100 Hz and 12 bits, then reduce sampling to 10 Hz. Compare waveform shape.",
+      "Change ADC resolution from 8 to 16 bits and inspect the pressure-per-code value.",
+      "Add noise and channel delay; export the sampled data for inspection."
+    ],
+    "assumption": "Synthetic Gaussian pulse shape with a secondary feature, not a physiological or diagnostic model. Converter range is fixed to 0–250 mmHg for illustration. Noise and delay are controlled examples, not measured platform specifications.",
+    "labtitle": "Sampling, quantization & channel delay",
+    "slug": "cardiovascular-phantom",
+    "image": "/images/obsl-arm-phantom.png",
+    "alt": "OBSL human arm phantom with wearable devices mounted on a test fixture",
+    "context": "Texas A&M University · Biomedical test systems",
+    "credit": "Physical phantom imagery and CAD: OBSL / Texas A&M University View source ↗",
+    "documented": [
+      {
+        "title": "A physical platform for sensor testing",
+        "paragraphs": [
+          "A physiological phantom reproduces selected properties of the body so a sensor can be examined under controlled conditions. In the OBSL platform, anatomical phantoms and pulsatile flow provide a setting for testing wearable sensing devices. The lab’s wider platform includes control of pressure, temperature, and motion.",
+          "The photographs show a physical arm fixture with devices under test. The enclosure image is a lab CAD rendering. These images describe the research environment; the full platform is the work of a broader research and engineering team."
+        ]
+      },
+      {
+        "title": "My firmware and acquisition contribution",
+        "paragraphs": [
+          "My work supports biomedical phantom pressure-monitoring experiments using Arduino Portenta H7, analog and digital pressure sensors, ADC/DAC interfaces, level shifting, and Python test software. The focus is connecting hardware to real-time acquisition and making the resulting waveforms available for inspection.",
+          "The firmware and host tool are parts of the same engineering workflow. A sensor interface brings the signal into the embedded system; host-side acquisition and plotting make it possible to review waveform behavior during experimental validation."
+        ]
+      }
+    ]
+  },
+  "yocto-patient-monitoring": {
+    "kind": "mqtt",
+    "color": "mint",
+    "title": "Yocto Linux patient-monitoring project",
+    "eyebrow": "EMBEDDED LINUX / SENSORS / MQTT / CLOUD PATH",
+    "focus": "A BeagleBone Black project integrating MAX30100 and LM35 sensing with a Yocto Linux platform and MQTT-based cloud communication.",
+    "skills": [
+      "Yocto Linux",
+      "BeagleBone Black",
+      "MAX30100 / LM35",
+      "MQTT",
+      "Cloud communication",
+      "Python tooling"
+    ],
+    "flow": [
+      [
+        "Sensor inputs",
+        "MAX30100 and LM35 are the documented sensing components. Acquisition and network delivery are separate interfaces to reason about."
+      ],
+      [
+        "Yocto Linux target",
+        "The BeagleBone Black target supplies the embedded Linux environment. Image configuration, sensor availability, timestamps, and application state are useful verification boundaries."
+      ],
+      [
+        "MQTT client & outbox",
+        "Serialization and connectivity turn a local sample into a message. Buffering and retry behavior should be explicit rather than hidden in a counter."
+      ],
+      [
+        "Broker & consumer",
+        "The documented project includes MQTT cloud communication. The browser model adds a visible outbox, ACK behavior, and subscriber deduplication as an educational exploration."
+      ]
+    ],
+    "decisions": [
+      [
+        "Offline policy",
+        "Best-effort delivery and an acknowledged outbox behave differently during outages.",
+        "Compare QoS 0 loss with the demo QoS 1 queue and retry policy."
+      ],
+      [
+        "Duplicate delivery",
+        "A lost acknowledgment can cause a message to be sent again.",
+        "Keep a stable message ID across retries and inspect subscriber deduplication."
+      ],
+      [
+        "Bounded storage",
+        "An offline target has finite memory.",
+        "Set an outbox limit, expose drops, and inspect what happens after reconnecting."
+      ]
+    ],
+    "try": [
+      "Select QoS 1, disconnect MQTT, generate samples, then reconnect.",
+      "Drop acknowledgments while connected. Retries reuse the same message ID.",
+      "Switch to QoS 0 during an outage and compare loss with the queued mode."
+    ],
+    "assumption": "Illustrative MQTT application model, not a broker or full MQTT protocol implementation. QoS 1 retries until acknowledged; the subscriber deduplicates IDs. No real patient information, cloud credentials, or external connection is used.",
+    "labtitle": "MQTT outbox, retries & duplicate delivery",
+    "slug": "yocto-patient-monitoring",
+    "image": "/images/beaglebone-black.jpg",
+    "alt": "Real BeagleBone Black development board showing the processor, GPIO headers, Ethernet, and USB interfaces",
+    "context": "Independent project · Jul – Sep 2023",
+    "credit": "BeagleBone Black · development platform for embedded Linux and Yocto. View source ↗",
+    "documented": [
+      {
+        "title": "The project",
+        "paragraphs": [
+          "I developed an IoT patient-monitoring project around BeagleBone Black and a Yocto Linux platform. The system integrated MAX30100 and LM35 sensors and used MQTT for a connected data path. The project brought together sensor interfaces, embedded Linux, and host-to-network communication.",
+          "This project connects an embedded Linux target to both the physical sensing environment and a network. Those two interfaces give it a useful systems perspective: data has to enter the target consistently before it can become a useful message elsewhere."
+        ]
+      },
+      {
+        "title": "The engineering boundaries",
+        "paragraphs": [
+          "The architecture can be understood as four boundaries: a physical signal becomes a sensor reading, the reading enters the Linux system, software prepares it for transport, and the network carries it to a consumer. Keeping those boundaries visible makes it easier to explain where the embedded work sits.",
+          "The implementation combines sensing hardware, a Yocto-based target, and MQTT communication. Its value as an independent engineering project is the integration across these layers and the ability to follow a reading from its origin to its connected representation."
+        ]
+      }
+    ]
+  },
+  "mips-fifo-digital-design": {
+    "kind": "rtl",
+    "color": "violet",
+    "title": "MIPS processor & FIFO digital design",
+    "eyebrow": "VHDL / VERILOG / RTL / VERIFICATION",
+    "focus": "A 32-bit MIPS processor project and separate synchronous/asynchronous FIFO designs, developed with Quartus Prime and ModelSim.",
+    "skills": [
+      "VHDL",
+      "Verilog",
+      "32-bit datapaths",
+      "FIFO flags",
+      "Quartus Prime",
+      "ModelSim testbenches"
+    ],
+    "flow": [
+      [
+        "RTL description",
+        "The documented projects are a single-cycle MIPS processor in VHDL and separate 8 × 8 FIFO designs in Verilog."
+      ],
+      [
+        "Stimulus & control",
+        "Instruction operands, memory operations, and queue read/write conditions provide controlled stimulus for reasoning about logic."
+      ],
+      [
+        "Simulation & checks",
+        "Quartus Prime and ModelSim form the documented design/verification workflow. Ordering and boundary flags matter as much as a successful nominal transfer."
+      ],
+      [
+        "Inspection",
+        "The architecture reference comes from the published article. The browser lab exposes architectural state; it is not an exported RTL simulation."
+      ]
+    ],
+    "decisions": [
+      [
+        "Instruction state",
+        "The destination register must receive the intended result at write-back.",
+        "Follow fetch, decode, execute, memory, and write-back without conflating an animation with a clock-accurate design."
+      ],
+      [
+        "Memory boundaries",
+        "A word access must have a valid aligned address in the model.",
+        "Inspect address calculation, memory read/write, and rejected out-of-range operations."
+      ],
+      [
+        "FIFO boundaries",
+        "Full and empty conditions are explicit control states.",
+        "Exercise wrap-around, rejected writes/reads, almost-full/empty flags, and pointer representations."
+      ]
+    ],
+    "try": [
+      "Step through the Memory program stage by stage; inspect SW, LW, and register write-back.",
+      "Run the Branch program and follow the program counter as the loop exits.",
+      "Open FIFO, set producer faster than consumer, and inspect overflow rejection and pointer wrap."
+    ],
+    "assumption": "Instruction-level teaching subset: 32 registers, 16 memory words, unsigned wrapping arithmetic, and no branch delay slots. FIFO clocks are independent software timers, not CDC/metastability verification. Quartus/ModelSim remain the actual RTL verification tools.",
+    "labtitle": "Instruction execution & circular FIFO",
+    "slug": "mips-fifo-digital-design",
+    "image": "/images/mips-article-1.jpg",
+    "alt": "CPU architecture reference diagram from Dinesh Karnati’s published MIPS article, showing control, program counter, register file, and ALU",
+    "context": "Independent projects · 2023 – 2024",
+    "credit": "Processor architecture reference · from my published MIPS article. View source ↗",
+    "documented": [
+      {
+        "title": "Two projects in digital logic",
+        "paragraphs": [
+          "My digital-design work includes a 32-bit single-cycle MIPS processor in VHDL and separate FIFO designs in Verilog. I designed and emulated the processor using Quartus Prime and ModelSim. The FIFO work included synchronous and asynchronous designs with 8 × 8 memory.",
+          "These are distinct projects. The processor explores instruction execution and datapath logic. The FIFO explores ordered storage, retrieval, and status flags. Grouping them here highlights the shared workflow of describing logic, applying testbench stimulus, and inspecting simulation behavior."
+        ]
+      },
+      {
+        "title": "Processor design and verification",
+        "paragraphs": [
+          "The MIPS project gave me a setting for working with RTL and simulation tools. The documented design is single-cycle: the execution behavior needs to be considered as a complete instruction path. The cover reproduces the processor architecture reference included in my published article. It shows the controller, program counter, register file, and ALU; it is not presented as an exported Quartus schematic or a ModelSim result.",
+          "The arithmetic walkthrough focuses on a single operation. It accepts two register values and demonstrates an ADD result with a register write-back message, making the movement from operands to destination register easy to inspect."
+        ]
+      }
+    ]
+  },
+  "connected-iot-systems": {
+    "kind": "iot",
+    "color": "yellow",
+    "title": "Connected IoT sensing & control",
+    "eyebrow": "BARE-METAL FUNDAMENTALS / WI-FI / MQTT / GPIO",
+    "focus": "ESP8266/MQTT remote switching and a separate Arduino/ESP8266 crop-protection sensing prototype.",
+    "skills": [
+      "Embedded C / C++",
+      "ESP8266 / Arduino",
+      "Wi-Fi",
+      "MQTT",
+      "GPIO / sensing",
+      "Web / mobile control"
+    ],
+    "flow": [
+      [
+        "User command",
+        "A web/mobile interface provides the requested output state in the documented switch project. Desired state and reported state are different facts."
+      ],
+      [
+        "Broker transport",
+        "MQTT connects the command publisher to the device. A broker connection does not prove the microcontroller received or applied the command."
+      ],
+      [
+        "Device firmware",
+        "ESP8266 firmware interprets a message and controls an output. The separate agriculture prototype adds PIR and ultrasonic sensing around Arduino Uno and ESP8266."
+      ],
+      [
+        "Acknowledgment",
+        "The teaching lab makes delivery delay, lost acknowledgments, reconnect behavior, and malformed payload rejection visible."
+      ]
+    ],
+    "decisions": [
+      [
+        "Desired vs reported state",
+        "A successful publish should not be confused with a confirmed physical output.",
+        "Track a command ID, pending state, device application, and acknowledgment."
+      ],
+      [
+        "Reconnect policy",
+        "A device returning after an outage needs a clear policy for the latest desired state.",
+        "Compare retained and non-retained commands in the model."
+      ],
+      [
+        "Input validation",
+        "A connected interface should not turn an arbitrary payload into an output change.",
+        "Reject malformed commands and keep the previous output unchanged."
+      ]
+    ],
+    "try": [
+      "Send ON, disconnect Wi-Fi, then send OFF with retained commands enabled.",
+      "Reconnect Wi-Fi and inspect desired state, device output, and acknowledgment.",
+      "Drop an ACK or send an invalid payload; use Query device to reconcile reported state."
+    ],
+    "assumption": "Local command/acknowledgment teaching model with synthetic latency. Retained commands represent the latest requested state. No mains switching, real device, or network connection is controlled.",
+    "labtitle": "Wi-Fi, retained commands & acknowledgments",
+    "slug": "connected-iot-systems",
+    "image": "/images/esp8266-devkitc.jpg",
+    "alt": "Photograph of Espressif ESP8266-DevKitC with labeled module, power regulator, USB-to-UART bridge, buttons, and headers",
+    "context": "Independent projects · 2020 – 2021",
+    "credit": "ESP8266-DevKitC · manufacturer hardware reference, © Espressif Systems. View source ↗",
+    "documented": [
+      {
+        "title": "Two applications of connected firmware",
+        "paragraphs": [
+          "I built an IoT switch system using ESP8266 and MQTT, with remote control through web and mobile interfaces. In a separate smart-agriculture project, I used Arduino Uno, ESP8266, PIR sensing, and ultrasonic sensing for a crop-protection prototype.",
+          "The projects share a simple embedded pattern: obtain an input, represent it in software, communicate when needed, and change or report a device state. Their application goals differ, so they are described separately rather than presented as one deployed product."
+        ]
+      },
+      {
+        "title": "The remote-switch path",
+        "paragraphs": [
+          "The switch project connects a user-facing command to a microcontroller through MQTT. A useful explanation follows the message from the interface to the communication path and then to the embedded output. That makes it easier to discuss command state and device state without treating them as the same thing.",
+          "The interactive example below turns that distinction into visible behavior. An ON command changes a simulated GPIO output when the broker is available. With the link offline, a new command is rejected and the displayed output remains unchanged."
+        ]
+      }
+    ]
+  },
+  "fuzzy-logic-forecasting": {
+    "slug": "fuzzy-logic-forecasting",
+    "kind": "fuzzy",
+    "color": "blue",
+    "title": "Python fuzzy-logic forecasting",
+    "eyebrow": "APPLIED AI / FUZZY INFERENCE / PYTHON",
+    "focus": "A documented Python fuzzy-logic electricity-price forecasting role, with statistical analysis and refinement of membership functions and defuzzification.",
+    "skills": [
+      "Python",
+      "Fuzzy logic",
+      "Membership functions",
+      "Rule evaluation",
+      "Statistical analysis",
+      "Data analysis"
+    ],
+    "context": "Config Software Solution · Firmware Developer · Jan – Aug 2022",
+    "image": "/images/fuzzy-pipeline.svg",
+    "alt": "Fuzzy inference pipeline: inputs, membership functions, rule evaluation, and an illustrative output index",
+    "credit": "Original explanatory diagram. The interactive model is a portfolio teaching example.",
+    "documented": [
+      {
+        "title": "The documented work",
+        "paragraphs": [
+          "At Config Software Solution, I developed a Python fuzzy-logic system for electricity-price forecasting. My work included statistical analysis to evaluate behavior and refine membership functions and defuzzification methods.",
+          "The interactive example below demonstrates fuzzy rule activation using normalized inputs and a relative output index. It is a new explanatory model for this portfolio; no historical training data, measured accuracy, or production forecasting results are claimed."
+        ]
+      },
+      {
+        "title": "Current AI-assisted development workflow",
+        "paragraphs": [
+          "I use Claude and coding agents for coding and debugging. Those tools support the development process; engineering review and validation remain separate responsibilities.",
+          "Fuzzy inference is an interpretable AI method. It is distinct from claiming that a trained machine-learning model runs inside my wearable or ECU projects."
+        ]
+      }
+    ],
+    "flow": [
+      [
+        "Normalized inputs",
+        "Demand, renewable availability, and trend are illustrative input variables for this browser model."
+      ],
+      [
+        "Membership functions",
+        "Low, medium, and high memberships overlap. Each input can partially activate more than one rule."
+      ],
+      [
+        "Rule evaluation",
+        "Rule strengths combine memberships and weight a small set of explicit output values."
+      ],
+      [
+        "Output & inspection",
+        "A weighted output index, memberships, and rule contributions make the reasoning visible."
+      ]
+    ],
+    "decisions": [
+      [
+        "Interpretability",
+        "A numeric result should be traceable to the rules that contributed to it.",
+        "Inspect every activation strength and weighted contribution."
+      ],
+      [
+        "Input scale",
+        "Membership functions assume a defined input domain.",
+        "Normalize and bound inputs before comparing rule behavior."
+      ],
+      [
+        "Evaluation",
+        "A smooth demonstration is not evidence of forecast accuracy.",
+        "Use a held-out dataset and suitable error metrics when evaluating a real forecasting model."
+      ]
+    ],
+    "try": [
+      "Raise demand while reducing renewable availability. Inspect which rules activate.",
+      "Move near a membership boundary and see overlapping rules blend the output.",
+      "Change trend and compare the relative index; export rule contributions."
+    ],
+    "assumption": "New zero-order weighted-rule teaching example, not the original Python forecasting implementation. Output is a relative index, not a market price, investment signal, or validated prediction.",
+    "labtitle": "Fuzzy memberships & rule contributions"
+  }
+}
