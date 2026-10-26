@@ -18,7 +18,7 @@ function chart(s,points,min,max,label='Model trace',xLabel='time / s'){
  svg.innerHTML=markup;
 }
 function makeLab(el,mod){
- el.innerHTML=`<div class="lab-top"><span class="lab-live-dot"></span><strong>Interactive engineering model</strong><span class="lab-local">LOCAL / SYNTHETIC</span></div><div class="lab-controls-grid">${mod.controls}</div><div class="lab-buttons">${button('run','Run lab')}${mod.buttons||''}${button('reset','Reset state')}${button('export','Export CSV')}</div><div class="lab-message" role="status">Ready. Change controls, run the model, and inspect the behavior.</div>${mod.view}<details class="lab-log-disclosure"><summary>Event trace <span>+</span></summary><pre class="lab-log" aria-label="Model event trace"></pre></details>`;
+ el.innerHTML=`<div class="lab-top"><span class="lab-live-dot"></span><strong>Illustrative engineering model</strong><span class="lab-local">SYNTHETIC / NO HARDWARE</span></div><div class="lab-controls-grid">${mod.controls}</div><div class="lab-buttons">${button('run','Run lab')}${mod.buttons||''}${button('reset','Reset state')}${button('export','Export CSV')}</div><div class="lab-message" role="status">Ready. Change controls, run the model, and inspect the behavior.</div>${mod.view}<details class="lab-log-disclosure"><summary>Event trace <span>+</span></summary><pre class="lab-log" aria-label="Model event trace"></pre></details>`;
  const s={el,t:0,running:false,data:{},history:[],samples:[],seed:1337,defaults:{}};
  s.$=q=>el.querySelector(q);s.v=k=>Number(s.$(`[data-c="${k}"]`).value);s.str=k=>s.$(`[data-c="${k}"]`).value;
  s.m=(k,v)=>{const n=s.$(`[data-m="${k}"]`);if(n)n.textContent=v;};s.message=t=>s.$('.lab-message').textContent=t;

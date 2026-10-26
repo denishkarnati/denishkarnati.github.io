@@ -1,9 +1,9 @@
-# Dinesh Karnati engineering portfolio
+# Dinesh Karnati portfolio
 
-Static GitHub Pages portfolio. Nine pages, seven case studies, resume downloads, real hardware and profile photographs, and a Lucid software diagram.
+Static GitHub Pages site with seven resume-based case studies, three original technical guides, PDF resume links, and two synthetic illustrations (BLE queues and generic CAN freshness). Lab photos are used for research; Lucid uses only a generic software diagram and illustration. Other project covers are original explanatory diagrams.
 
-The colorful editorial theme lives in systems.css. Navigation and filtering use portfolio.js. Seven interactive browser teaching models use labs.js and labs.css: BLE acquisition queues, CAN freshness/watchdog, pressure sampling/ADC, MQTT outbox/retries, MIPS subset/FIFO, connected device state/acknowledgments, and fuzzy inference. Controls, failure injection, state inspection, reset and CSV export run locally without a backend.
+No build step. Publish main at root. systems.css is the current theme; portfolio.js controls navigation and filtering; labs.js initializes the two illustrations.
 
-Models have explicit assumptions and do not claim to reproduce production firmware, clinical measurements, or validated forecasts. Claude and coding agents are current coding/debugging tools. Source project contributions come from the resume and supplied public profile. No car imagery or generated hardware photographs.
+Analytics integration is prepared but disabled. After creating an owner-controlled GoatCounter site, set goatcounterEndpoint in analytics-config.json to its public HTTPS /count URL. No visitor data is sent while the endpoint is null. The loader respects Do Not Track and runs only on the production hostname. See https://www.goatcounter.com/help/start .
 
-Publish main at root. No build required.
+Use resume-supported claims only. The prose does not invent project measurements, a bug incident, solo ownership, coursework status, or hardware captures. Domain, handle and email changes require owner-controlled accounts.

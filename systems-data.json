@@ -56,23 +56,33 @@
     "assumption": "Application-payload budget model. It omits BLE airtime, retransmissions, radio coexistence, and measured hardware performance. Overflow drops the newest frame. The plotted waveform is synthetic and display-decimated.",
     "labtitle": "Acquisition, buffering & BLE backpressure",
     "slug": "wearable-firmware",
-    "image": "/images/obsl-armband-device.png",
+    "image": "/images/obsl-armband-device.webp",
     "alt": "OBSL multimodal armband design and physical wearable prototype",
-    "context": "Texas A&M University · Current research engineering",
-    "credit": "Lab platform imagery: Optical Bio-Sensing Laboratory, Texas A&M University View source ↗",
+    "context": "Texas A&M University \u00b7 Current research engineering",
+    "credit": "OBSL lab-platform photo, Texas A&M University. The interactive trace is synthetic.",
     "documented": [
       {
-        "title": "The engineering problem",
+        "title": "Problem",
         "paragraphs": [
-          "A wearable sensing system needs more than a sensor reading. Firmware must coordinate interfaces, collect samples at the right time, identify the device, and move data to a host that an engineer can inspect. Those responsibilities cross the boundary between electronics and software.",
-          "At Texas A&M University, my work includes embedded firmware for wearable sensing and biomedical test systems. I use C/C++ with nRF52840 and nRF52832 targets, Zephyr RTOS, and supporting hardware platforms. The lab imagery here provides context for the wearable research; my contribution is firmware, hardware integration, and engineering tools."
+          "A wearable data path has to connect sensor acquisition, device firmware, wireless delivery, and host-side inspection. I developed the C/C++ firmware and Python tools that connect those boundaries at Texas A&M\u2019s Optical Bio-Sensing Laboratory."
         ]
       },
       {
-        "title": "My contribution across the signal chain",
+        "title": "Constraint",
         "paragraphs": [
-          "My sensor-integration work includes ADS131M04/M02 ADCs, MAX30208 temperature sensing, BNO080 inertial sensing, and MAX20303 power management. SPI, I2C, GPIO, interrupts, and timing all matter when these parts become one acquisition system.",
-          "On the data path, I implement interrupt-driven multichannel acquisition and BLE GATT streaming, including device identification and battery telemetry. On the host, I build Python tools using Bleak, PySide6, and pyqtgraph for device discovery, selection, live plotting, battery monitoring, and CSV recording."
+          "Sampling and BLE delivery run on different schedules. A live plot alone cannot identify whether a problem begins at the sensor, the bus transaction, firmware timing, or host decoding. The system also needs device identification, battery telemetry, and useful access during board bring-up."
+        ]
+      },
+      {
+        "title": "Decision",
+        "paragraphs": [
+          "I implemented interrupt-driven multichannel acquisition in Zephyr and BLE GATT streaming on nRF52840 / nRF52832 targets. I integrated ADC, temperature, inertial, and power-management devices over SPI, I2C, and GPIO. This keeps acquisition and the host communication path explicit rather than treating the plotted signal as the whole system."
+        ]
+      },
+      {
+        "title": "Result",
+        "paragraphs": [
+          "I built a device-to-host workflow with BLE discovery, device selection, live plots, battery monitoring, CSV logging, and automated collection. I used PySide6, pyqtgraph, and Bleak for the host tools. My contribution covered firmware, sensor integration, custom-board bring-up, and the software used to inspect acquired data."
         ]
       }
     ]
@@ -136,21 +146,31 @@
     "slug": "lucid-powertrain",
     "image": "/images/lucid-software-system.svg",
     "alt": "Powertrain software workflow: C/C++ platform drivers, AUTOSAR integration, ECU bring-up and debugging, and Python/Shell bench validation with a feedback loop",
-    "context": "Lucid · Embedded Software Engineer · Jan 2024 – Apr 2026",
-    "credit": "High-level engineering workflow based on my documented responsibilities at Lucid. Open full-size diagram ↗",
+    "context": "Lucid \u00b7 Embedded Software Engineer \u00b7 Jan 2024 \u2013 Apr 2026",
+    "credit": "Original generic software diagram and browser simulation; no vehicle photo, production ECU logic, or confidential implementation.",
     "documented": [
       {
-        "title": "The role at Lucid",
+        "title": "Problem",
         "paragraphs": [
-          "At Lucid, I worked on platform software for electric-vehicle powertrain ECUs. My work covered low-level drivers, middleware, software integration, and debugging at the hardware–software boundary. The role ran from January 2024 to April 2026, following an embedded software engineering internship from August to December 2023.",
-          "The engineering focus was real-time platform behavior: bringing modules together on ECU hardware, resolving integration issues, and supporting validation within automotive development and safety processes."
+          "Powertrain ECU software depends on low-level drivers, middleware, and application integration working together on the target. At Lucid, I developed and debugged platform software at that hardware\u2013software boundary."
         ]
       },
       {
-        "title": "From modules to an integrated ECU",
+        "title": "Constraint",
         "paragraphs": [
-          "I worked across AUTOSAR BSW, RTE, and MCAL layers while integrating platform and application software. My responsibilities included on-chip debugging, code review, and performance-oriented changes to real-time software.",
-          "The important distinction is between a software component that works in isolation and a system that behaves correctly when its dependencies are present on the ECU. Debugging at that boundary requires attention to both the software path and the behavior of the target hardware."
+          "The work ran within automotive development and validation processes. A module working in isolation does not establish correct behavior after its hardware interfaces, platform dependencies, and application interactions are integrated."
+        ]
+      },
+      {
+        "title": "Decision",
+        "paragraphs": [
+          "I developed low-level drivers and middleware and worked across AUTOSAR BSW, RTE, and MCAL integration. I used on-chip debugging to investigate hardware/software integration issues and reviewed real-time code for responsiveness."
+        ]
+      },
+      {
+        "title": "Result",
+        "paragraphs": [
+          "I contributed integrated ECU platform software and repeatable bench-validation workflows. I wrote Python and Shell automation for validation and supported code review, defect triage, and software integration. My full-time role ran January 2024\u2013April 2026, following an August\u2013December 2023 internship."
         ]
       }
     ]
@@ -209,26 +229,36 @@
       "Change ADC resolution from 8 to 16 bits and inspect the pressure-per-code value.",
       "Add noise and channel delay; export the sampled data for inspection."
     ],
-    "assumption": "Synthetic Gaussian pulse shape with a secondary feature, not a physiological or diagnostic model. Converter range is fixed to 0–250 mmHg for illustration. Noise and delay are controlled examples, not measured platform specifications.",
+    "assumption": "Synthetic Gaussian pulse shape with a secondary feature, not a physiological or diagnostic model. Converter range is fixed to 0\u2013250 mmHg for illustration. Noise and delay are controlled examples, not measured platform specifications.",
     "labtitle": "Sampling, quantization & channel delay",
     "slug": "cardiovascular-phantom",
-    "image": "/images/obsl-arm-phantom.png",
+    "image": "/images/obsl-arm-phantom.webp",
     "alt": "OBSL human arm phantom with wearable devices mounted on a test fixture",
-    "context": "Texas A&M University · Biomedical test systems",
-    "credit": "Physical phantom imagery and CAD: OBSL / Texas A&M University View source ↗",
+    "context": "Texas A&M University \u00b7 Biomedical test systems",
+    "credit": "OBSL lab-platform photo, Texas A&M University.",
     "documented": [
       {
-        "title": "A physical platform for sensor testing",
+        "title": "Problem",
         "paragraphs": [
-          "A physiological phantom reproduces selected properties of the body so a sensor can be examined under controlled conditions. In the OBSL platform, anatomical phantoms and pulsatile flow provide a setting for testing wearable sensing devices. The lab’s wider platform includes control of pressure, temperature, and motion.",
-          "The photographs show a physical arm fixture with devices under test. The enclosure image is a lab CAD rendering. These images describe the research environment; the full platform is the work of a broader research and engineering team."
+          "Biomedical test setups need firmware and host software that make pressure signals inspectable during experiments. I supported Portenta H7 pressure-monitoring work at Texas A&M\u2019s Optical Bio-Sensing Laboratory."
         ]
       },
       {
-        "title": "My firmware and acquisition contribution",
+        "title": "Constraint",
         "paragraphs": [
-          "My work supports biomedical phantom pressure-monitoring experiments using Arduino Portenta H7, analog and digital pressure sensors, ADC/DAC interfaces, level shifting, and Python test software. The focus is connecting hardware to real-time acquisition and making the resulting waveforms available for inspection.",
-          "The firmware and host tool are parts of the same engineering workflow. A sensor interface brings the signal into the embedded system; host-side acquisition and plotting make it possible to review waveform behavior during experimental validation."
+          "ADC / DAC integration, voltage-domain interfaces, and waveform behavior must agree before a host plot can be interpreted. A physical phantom also needs repeatable bench conditions rather than a display that merely resembles a physiological waveform."
+        ]
+      },
+      {
+        "title": "Decision",
+        "paragraphs": [
+          "I integrated the Portenta H7 acquisition path, supported level shifting, and verified waveforms with bench tools. I developed Python test software to inspect the pressure-monitoring experiments and their device interfaces."
+        ]
+      },
+      {
+        "title": "Result",
+        "paragraphs": [
+          "My work connected pressure acquisition, ADC / DAC interfaces, waveform verification, and host-side testing. I contributed embedded integration and test software used to investigate the bench signal path."
         ]
       }
     ]
@@ -290,23 +320,33 @@
     "assumption": "Illustrative MQTT application model, not a broker or full MQTT protocol implementation. QoS 1 retries until acknowledged; the subscriber deduplicates IDs. No real patient information, cloud credentials, or external connection is used.",
     "labtitle": "MQTT outbox, retries & duplicate delivery",
     "slug": "yocto-patient-monitoring",
-    "image": "/images/beaglebone-black.jpg",
-    "alt": "Real BeagleBone Black development board showing the processor, GPIO headers, Ethernet, and USB interfaces",
-    "context": "Independent project · Jul – Sep 2023",
-    "credit": "BeagleBone Black · development platform for embedded Linux and Yocto. View source ↗",
+    "image": "/images/yocto-sensing-path.svg",
+    "alt": "Sensor inputs, Yocto Linux on BeagleBone, MQTT communication, and a remote monitoring consumer",
+    "context": "Project \u00b7 Jul\u2013Sep 2023",
+    "credit": "Original explanatory system diagram based on the resume project.",
     "documented": [
       {
-        "title": "The project",
+        "title": "Problem",
         "paragraphs": [
-          "I developed an IoT patient-monitoring project around BeagleBone Black and a Yocto Linux platform. The system integrated MAX30100 and LM35 sensors and used MQTT for a connected data path. The project brought together sensor interfaces, embedded Linux, and host-to-network communication.",
-          "This project connects an embedded Linux target to both the physical sensing environment and a network. Those two interfaces give it a useful systems perspective: data has to enter the target consistently before it can become a useful message elsewhere."
+          "I developed a patient-monitoring project that joined sensor acquisition on a BeagleBone Black with MQTT-based cloud communication. The work ran July\u2013September 2023."
         ]
       },
       {
-        "title": "The engineering boundaries",
+        "title": "Constraint",
         "paragraphs": [
-          "The architecture can be understood as four boundaries: a physical signal becomes a sensor reading, the reading enters the Linux system, software prepares it for transport, and the network carries it to a consumer. Keeping those boundaries visible makes it easier to explain where the embedded work sits.",
-          "The implementation combines sensing hardware, a Yocto-based target, and MQTT communication. Its value as an independent engineering project is the integration across these layers and the ability to follow a reading from its origin to its connected representation."
+          "An embedded Linux sensing path crosses several boundaries: the target image, device interfaces, sensor reads, and delivery to a remote consumer. A successful message alone does not establish correct sensor values or a reproducible target configuration."
+        ]
+      },
+      {
+        "title": "Decision",
+        "paragraphs": [
+          "I used Yocto Linux on the BeagleBone Black and integrated MAX30100 and LM35 sensors. I connected the acquired data to an MQTT communication path so that acquisition and remote delivery could be considered separately."
+        ]
+      },
+      {
+        "title": "Result",
+        "paragraphs": [
+          "I built an embedded Linux monitoring system with sensor integration and cloud messaging. My documented contribution is the target sensing and MQTT communication path."
         ]
       }
     ]
@@ -328,7 +368,7 @@
     "flow": [
       [
         "RTL description",
-        "The documented projects are a single-cycle MIPS processor in VHDL and separate 8 × 8 FIFO designs in Verilog."
+        "The documented projects are a single-cycle MIPS processor in VHDL and separate 8 \u00d7 8 FIFO designs in Verilog."
       ],
       [
         "Stimulus & control",
@@ -368,23 +408,33 @@
     "assumption": "Instruction-level teaching subset: 32 registers, 16 memory words, unsigned wrapping arithmetic, and no branch delay slots. FIFO clocks are independent software timers, not CDC/metastability verification. Quartus/ModelSim remain the actual RTL verification tools.",
     "labtitle": "Instruction execution & circular FIFO",
     "slug": "mips-fifo-digital-design",
-    "image": "/images/mips-article-1.jpg",
-    "alt": "CPU architecture reference diagram from Dinesh Karnati’s published MIPS article, showing control, program counter, register file, and ALU",
-    "context": "Independent projects · 2023 – 2024",
-    "credit": "Processor architecture reference · from my published MIPS article. View source ↗",
+    "image": "/images/rtl-data-path.svg",
+    "alt": "Explanatory MIPS datapath and separate eight by eight FIFO project boundaries",
+    "context": "MIPS project \u00b7 Oct\u2013Dec 2023 | FIFO project \u00b7 Feb\u2013May 2024",
+    "credit": "Original explanatory RTL diagram. The processor and FIFO are separate projects.",
     "documented": [
       {
-        "title": "Two projects in digital logic",
+        "title": "Problem",
         "paragraphs": [
-          "My digital-design work includes a 32-bit single-cycle MIPS processor in VHDL and separate FIFO designs in Verilog. I designed and emulated the processor using Quartus Prime and ModelSim. The FIFO work included synchronous and asynchronous designs with 8 × 8 memory.",
-          "These are distinct projects. The processor explores instruction execution and datapath logic. The FIFO explores ordered storage, retrieval, and status flags. Grouping them here highlights the shared workflow of describing logic, applying testbench stimulus, and inspecting simulation behavior."
+          "I designed and emulated a 32-bit single-cycle MIPS processor in VHDL and implemented separate FIFO designs in Verilog. These projects explore instruction execution and ordered data storage through RTL and testbenches."
         ]
       },
       {
-        "title": "Processor design and verification",
+        "title": "Constraint",
         "paragraphs": [
-          "The MIPS project gave me a setting for working with RTL and simulation tools. The documented design is single-cycle: the execution behavior needs to be considered as a complete instruction path. The cover reproduces the processor architecture reference included in my published article. It shows the controller, program counter, register file, and ALU; it is not presented as an exported Quartus schematic or a ModelSim result.",
-          "The arithmetic walkthrough focuses on a single operation. It accepts two register values and demonstrates an ADD result with a register write-back message, making the movement from operands to destination register easy to inspect."
+          "The processor needs a coherent instruction path through control, register access, the ALU, and memory. A FIFO must preserve ordering while making full and empty conditions explicit. These are different verification problems, so the two projects are described separately."
+        ]
+      },
+      {
+        "title": "Decision",
+        "paragraphs": [
+          "For the processor, I used VHDL with Quartus Prime and ModelSim to design and validate the 32-bit single-cycle implementation. For the FIFO work, I implemented synchronous and asynchronous designs with 8 \u00d7 8 memory, boundary flags, and a testbench for storage and retrieval."
+        ]
+      },
+      {
+        "title": "Result",
+        "paragraphs": [
+          "The MIPS project ran October\u2013December 2023. The FIFO project ran February\u2013May 2024 and included full / empty and almost-full / almost-empty status. My contribution covered RTL implementation and simulation-based validation."
         ]
       }
     ]
@@ -446,23 +496,33 @@
     "assumption": "Local command/acknowledgment teaching model with synthetic latency. Retained commands represent the latest requested state. No mains switching, real device, or network connection is controlled.",
     "labtitle": "Wi-Fi, retained commands & acknowledgments",
     "slug": "connected-iot-systems",
-    "image": "/images/esp8266-devkitc.jpg",
-    "alt": "Photograph of Espressif ESP8266-DevKitC with labeled module, power regulator, USB-to-UART bridge, buttons, and headers",
-    "context": "Independent projects · 2020 – 2021",
-    "credit": "ESP8266-DevKitC · manufacturer hardware reference, © Espressif Systems. View source ↗",
+    "image": "/images/iot-control-path.svg",
+    "alt": "Remote interface, MQTT path, ESP8266 or Arduino firmware, and a physical switch or sensor boundary",
+    "context": "Connected switching \u00b7 2021 | Crop-protection prototype \u00b7 2020",
+    "credit": "Original explanatory diagram based on the two resume projects.",
     "documented": [
       {
-        "title": "Two applications of connected firmware",
+        "title": "Problem",
         "paragraphs": [
-          "I built an IoT switch system using ESP8266 and MQTT, with remote control through web and mobile interfaces. In a separate smart-agriculture project, I used Arduino Uno, ESP8266, PIR sensing, and ultrasonic sensing for a crop-protection prototype.",
-          "The projects share a simple embedded pattern: obtain an input, represent it in software, communicate when needed, and change or report a device state. Their application goals differ, so they are described separately rather than presented as one deployed product."
+          "I built connected-device projects that translated remote commands and sensor inputs into microcontroller behavior: an ESP8266 / MQTT switching system and an Arduino-based crop-protection prototype."
         ]
       },
       {
-        "title": "The remote-switch path",
+        "title": "Constraint",
         "paragraphs": [
-          "The switch project connects a user-facing command to a microcontroller through MQTT. A useful explanation follows the message from the interface to the communication path and then to the embedded output. That makes it easier to discuss command state and device state without treating them as the same thing.",
-          "The interactive example below turns that distinction into visible behavior. An ON command changes a simulated GPIO output when the broker is available. With the link offline, a new command is rejected and the displayed output remains unchanged."
+          "A network command and a physical device action are separate events. Sensing also needs to distinguish the observed input from the action taken in response. Those boundaries matter when connectivity fails or a sensor changes state."
+        ]
+      },
+      {
+        "title": "Decision",
+        "paragraphs": [
+          "For remote switching, I developed an IoT system supporting web and mobile control with ESP8266 and MQTT. For crop protection, I integrated PIR and ultrasonic sensors with Arduino Uno / ESP8266 hardware for intrusion monitoring."
+        ]
+      },
+      {
+        "title": "Result",
+        "paragraphs": [
+          "The remote-switching project ran January\u2013April 2021. The crop-protection prototype ran June\u2013September 2020. I developed the connected control and sensing behavior across the microcontroller and communication interfaces."
         ]
       }
     ]
@@ -482,23 +542,33 @@
       "Statistical analysis",
       "Data analysis"
     ],
-    "context": "Config Software Solution · Firmware Developer · Jan – Aug 2022",
+    "context": "Config Software Solution \u00b7 Firmware Developer \u00b7 Jan \u2013 Aug 2022",
     "image": "/images/fuzzy-pipeline.svg",
     "alt": "Fuzzy inference pipeline: inputs, membership functions, rule evaluation, and an illustrative output index",
-    "credit": "Original explanatory diagram. The interactive model is a portfolio teaching example.",
+    "credit": "Original explanatory fuzzy-inference diagram.",
     "documented": [
       {
-        "title": "The documented work",
+        "title": "Problem",
         "paragraphs": [
-          "At Config Software Solution, I developed a Python fuzzy-logic system for electricity-price forecasting. My work included statistical analysis to evaluate behavior and refine membership functions and defuzzification methods.",
-          "The interactive example below demonstrates fuzzy rule activation using normalized inputs and a relative output index. It is a new explanatory model for this portfolio; no historical training data, measured accuracy, or production forecasting results are claimed."
+          "At Config Software Solution, I developed a Python fuzzy-logic system for electricity-price forecasting. My role ran January\u2013August 2022."
         ]
       },
       {
-        "title": "Current AI-assisted development workflow",
+        "title": "Constraint",
         "paragraphs": [
-          "I use Claude and coding agents for coding and debugging. Those tools support the development process; engineering review and validation remain separate responsibilities.",
-          "Fuzzy inference is an interpretable AI method. It is distinct from claiming that a trained machine-learning model runs inside my wearable or ECU projects."
+          "A fuzzy forecast depends on the input domain, membership functions, inference rules, and the method used to combine outputs. A number is useful only when the model behavior can be evaluated against data."
+        ]
+      },
+      {
+        "title": "Decision",
+        "paragraphs": [
+          "I used statistical analysis to evaluate performance and refine membership functions and defuzzification methods. The work joined Python implementation with inspection of how model settings affected behavior."
+        ]
+      },
+      {
+        "title": "Result",
+        "paragraphs": [
+          "I contributed the Python fuzzy-logic forecasting system and its analytical refinement. This is my documented applied-AI work; my current use of Claude and coding agents is for coding and debugging."
         ]
       }
     ],
