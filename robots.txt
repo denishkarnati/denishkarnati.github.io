@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://denishkarnati.github.io/sitemap.xml

@@ -1,0 +1,32 @@
+{
+
+  "lab": "Optical Bio-Sensing Laboratory, Texas A&M University",
+
+  "sources": {
+
+    "obsl-wearable-patches.webp": "https://obsl.engr.tamu.edu/research/integrated-multimodal-chest-patch-for-continuous-cardiovascular-and-hemodynamic-monitoring/",
+
+    "obsl-armband-device.png": "https://obsl.engr.tamu.edu/research/noninvasive-multimodal-biosensing-armband-for-predictive-health-monitoring-and-translational-wearable-development/",
+
+    "obsl-armband-sensors.png": "https://obsl.engr.tamu.edu/research/noninvasive-multimodal-biosensing-armband-for-predictive-health-monitoring-and-translational-wearable-development/",
+
+    "obsl-arm-phantom.png": "https://obsl.engr.tamu.edu/research/advanced-modular-phantom-platform-for-noninvasive-wearable-and-medical-device-validation/",
+
+    "obsl-phantom-platform.png": "https://obsl.engr.tamu.edu/research/advanced-modular-phantom-platform-for-noninvasive-wearable-and-medical-device-validation/",
+
+    "obsl-wrist-wearable.png": "https://obsl.engr.tamu.edu/research/watchband-based-wearable-platform-for-continuous-cuffless-blood-pressure-monitoring/",
+
+    "mips-article-1.jpg": "https://medium.com/@denishkarnati99/32-bit-single-cycle-mips-processor-using-vhdl-b98eac92fdde",
+
+    "esp8266-devkitc.jpg": "https://espressif-docs.readthedocs-hosted.com/projects/esp8266-rtos-sdk/en/release-v3.4/get-started/get-started-devkitc.html",
+
+    "beaglebone-black.jpg": "https://www.beagleboard.org/boards/beaglebone-black",
+
+    "lucid-software-system.svg": "Original vector diagram summarizing the supplied resume; not a proprietary Lucid architecture."
+
+  },
+
+  "notes": "Lab photographs, published CAD views, and sensing diagrams are attributed in visible captions. Firmware contribution text is based on the supplied resume. Lab platform capabilities are context, not claims of sole authorship."
+
+}
+

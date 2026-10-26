@@ -1,0 +1,62 @@
+Dinesh Karnati
+EMBEDDED SOFTWARE AND FIRMWARE ENGINEER
+979-379-2990 | dinktek6@gmail.com
+linkedin.com/in/dinktek6 | dinesh-edge-ai.denishkarnati.chatgpt.site
+PROFESSIONAL SUMMARY
+Embedded software engineer with 5+ years of experience developing C/C++ firmware, integrating hardware and software, and debugging real-time systems across automotive, IoT, wearable, and biomedical applications. Experience spans Zephyr RTOS, FreeRTOS, ARM microcontrollers, BLE data acquisition, AUTOSAR integration, and custom PCB bring-up. Builds Python tools that connect embedded devices to repeatable engineering and validation workflows.
+TECHNICAL SKILLS
+Languages: C, C++, Embedded C, Python, Shell, MATLAB
+Platforms and operating systems: ARM Cortex-M, nRF52, STM32, ESP32, AVR, Zephyr RTOS, FreeRTOS, Embedded Linux, Yocto
+Interfaces and networking: SPI, I2C, UART, CAN, USB, Ethernet, BLE, Wi-Fi, MQTT
+Firmware and hardware: Device drivers, interrupts, multithreading, sensor integration, ADC/DAC, PMICs, power management, board bring-up, PCB debugging
+Debugging and validation: JTAG, GDB, SEGGER RTT, oscilloscopes, logic analyzers, HIL testing, root-cause analysis
+Automotive and tools: AUTOSAR BSW/RTE/MCAL, ECU integration, ISO 26262; Git, nRF Connect SDK, Keil, MATLAB/Simulink, Altium Designer, Quartus Prime, ModelSim
+PROFESSIONAL EXPERIENCE
+Embedded Firmware Engineer | Texas A&M University
+Apr 2026 - Present | College Station, TX
+Develop C/C++ firmware for wearable sensing and biomedical test systems using nRF52840/nRF52832, Zephyr RTOS, ESP32-C6, and Arduino Portenta H7.
+Integrate ADS131M04/M02 ADCs, MAX30208 temperature sensors, BNO080 IMUs, MAX20303 PMICs, and pressure/PPG sensors over SPI, I2C, and GPIO.
+Implement interrupt-driven, multichannel data acquisition and BLE GATT streaming with device identification, battery telemetry, and host data transfer.
+Bring up custom PCBs and isolate timing, communication, power-rail, ADC, and sensor-interface faults using oscilloscopes, logic analyzers, multimeters, and SEGGER RTT.
+Build Python tools with PySide6, pyqtgraph, and Bleak for BLE discovery, device selection, live plotting, battery monitoring, CSV logging, and automated data collection.
+Support Portenta H7 pressure-monitoring experiments through ADC/DAC integration, level shifting, waveform verification, and Python test software; characterize PMIC behavior, charging, and battery discharge.
+Embedded Software Engineer | Lucid
+Jan 2024 - Apr 2026 | Phoenix, AZ
+Developed low-level drivers and middleware for EV powertrain ECUs within ISO 26262-oriented development processes.
+Integrated and debugged ECU software using on-chip debugging tools, reducing hardware-software integration debugging time by 25%.
+Automated validation with Python and Shell scripts, improving validation efficiency by 30%; reviewed and optimized real-time software to improve system responsiveness by 15%.
+Worked across AUTOSAR BSW, RTE, and MCAL layers to integrate platform and application software.
+
+PROFESSIONAL EXPERIENCE CONTINUED
+Embedded Software Engineer Intern | Lucid
+Aug 2023 - Dec 2023
+Supported embedded C/C++ firmware development, ECU debugging, and bench validation for EV powertrain subsystems.
+Integrated application components into the AUTOSAR stack and contributed to requirements traceability, safety documentation, code reviews, and defect triage.
+Embedded System Developer | Sanzier IT Solutions
+Jan 2020 - Jan 2023 | India
+Developed firmware for Aqua Trace, vehicle-tracking products, and embedded training kits supporting 8051 and selected AVR microcontrollers.
+Integrated FreeRTOS on ESP32 to coordinate concurrent tasks across its dual-core architecture.
+Designed and revised schematics, assembled prototype boards, and soldered microcontrollers and supporting components.
+Debugged circuits with timers, counters, encoders, decoders, operational amplifiers, and oscillators; documented test results and troubleshooting procedures for production teams.
+Firmware Developer | Config Software Solution
+Jan 2022 - Aug 2022 | India
+Developed a Python fuzzy-logic system for electricity-price forecasting; used statistical analysis to evaluate performance and refine membership functions and defuzzification methods.
+SELECTED PROJECTS
+IoT Patient Monitoring | Yocto, BeagleBone Black, MQTT | Jul - Sep 2023
+Developed a real-time monitoring system integrating MAX30100 and LM35 sensors with MQTT-based cloud communication on a Yocto Linux platform.
+32 Bit Single Cycle MIPS Processor | VHDL | Oct - Dec 2023
+Designed and emulated a 32-bit MIPS processor; validated the design using Quartus Prime and ModelSim.
+FIFO Design | Verilog | Feb - May 2024
+Implemented synchronous/asynchronous FIFO designs with 8 x 8 memory, full/empty and almost-full/almost-empty flags, and a testbench for data storage and retrieval.
+Internet Connected Systems | ESP8266, MQTT | Jan - Apr 2021
+Developed an IoT switch system supporting remote control through web and mobile interfaces.
+Smart Agriculture | Arduino Uno, ESP8266 | Jun - Sep 2020
+Built an IoT crop-protection prototype using PIR and ultrasonic sensors for real-time monitoring.
+EDUCATION
+Master's Degree in Computer Information Science | New England College
+Jan 2023 - Jul 2024 | GPA 3.9
+Bachelor's Degree in Electronics and Communication Engineering | TKR Institution of Technology
+Jun 2018 - Jul 2021 | GPA 3.6
+TECHNICAL WRITING AND PROFESSIONAL DEVELOPMENT
+Project articles: medium.com/@denishkarnati99
+Coursework and training: Deep Learning AI (Coursera), Machine Learning (Great Learning), Generative AI (Google), IoT and Embedded Systems (NVIDIA).
