@@ -1,0 +1,47 @@
+{
+  "ble": {
+    "file": "ble-live-plot-desktop.webp",
+    "title": "A device stream, on the desktop.",
+    "tag": "BLE / HOST TOOLS",
+    "caption": "Two-channel live plotting alongside the BLE connection and calibration console.",
+    "alt": "Desktop screenshot showing a BLE connection console and two channel plots",
+    "w": 1783,
+    "h": 988
+  },
+  "spi": {
+    "file": "spi-logic-capture.webp",
+    "title": "Inspect the interface.",
+    "tag": "SPI / LOGIC ANALYZER",
+    "caption": "WaveForms capture showing chip select, clock, MOSI, MISO, and decoded SPI data.",
+    "alt": "WaveForms logic analyzer capture of SPI select, clock, MOSI and MISO signals",
+    "w": 1124,
+    "h": 830
+  },
+  "board": {
+    "file": "pressure-hardware-bench.webp",
+    "title": "Close to the hardware.",
+    "tag": "PRESSURE SENSING / BENCH",
+    "caption": "Annotated pressure-sensing hardware and wiring, shown in the supplied bench photo.",
+    "alt": "Annotated desktop photograph of a Portenta board, carrier and wired pressure sensor",
+    "w": 1036,
+    "h": 691
+  },
+  "verify": {
+    "file": "phantom-verification-desktop.webp",
+    "title": "Make verification explicit.",
+    "tag": "PYTHON / VERIFICATION",
+    "caption": "Python verification code for command echo, pressure conversion, response, and repeatability checks.",
+    "alt": "VS Code desktop showing Python phantom verification code and its project workspace",
+    "w": 1704,
+    "h": 1043
+  },
+  "ai": {
+    "file": "firmware-ai-desktop.webp",
+    "title": "The development workspace.",
+    "tag": "FIRMWARE / CODING TOOLS",
+    "caption": "Arduino Portenta H7 firmware open alongside an AI-assisted coding session.",
+    "alt": "Arduino IDE with Portenta H7 firmware and an AI-assisted coding terminal",
+    "w": 1872,
+    "h": 975
+  }
+}
