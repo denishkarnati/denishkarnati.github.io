@@ -1,13 +1,11 @@
 # Dinesh Karnati portfolio
 
-Static GitHub Pages site with seven resume-based case studies, three original technical guides, PDF resume links, and two synthetic illustrations (BLE queues and generic CAN freshness). Lab photos are used for research; Lucid uses only a generic software diagram and illustration. Other project covers are original explanatory diagrams.
+Static GitHub Pages portfolio. A compact dark homepage features four projects, three expandable projects, two primary bench captures, short profile, technical-note links, and contact. All seven case studies and three technical guides remain at their existing URLs. Tools and engineering notes are optional disclosures.
 
-No build step. Publish main at root. systems.css is the current theme; portfolio.js controls navigation and filtering; labs.js initializes the two illustrations.
+## Motion
 
-Analytics integration is prepared but disabled. After creating an owner-controlled GoatCounter site, set goatcounterEndpoint in analytics-config.json to its public HTTPS /count URL. No visitor data is sent while the endpoint is null. The loader respects Do Not Track and runs only on the production hostname. See https://www.goatcounter.com/help/start .
+The hero uses NullMotion's MIT-licensed HyperFrames scene builder, adapted with a capture scene for the user's existing images, and its bundled GSAP 3.14.2. Original copyright and license notices are preserved under vendor/nullmotion/ and THIRD_PARTY_NOTICES.md. Upstream commit is recorded there. No third-party ads, video, audio, editor, server, or export service is shipped.
 
-Use resume-supported claims only. The prose does not invent project measurements, a bug incident, solo ownership, coursework status, or hardware captures. Domain, handle and email changes require owner-controlled accounts.
+Motion supports pause/resume and reduced motion. It pauses offscreen and when the page is hidden; real fallback imagery remains if scripts cannot initialize. focus.css controls the shared dark interface, focus.js opens disclosures for deep links, and motion.mjs composes the hero sequence and restrained entrances. Existing bench and lab scripts remain functional.
 
-## Desktop evidence gallery
-
-bench.css and bench.js display five user-supplied desktop/bench captures on the homepage, relevant case studies, and technical guides. The viewer supports keyboard navigation, actual-size inspection, Escape, and focus restoration. Code, plots, and logic captures use lossless WebP; the hardware photo uses web-optimized WebP. A screenshot with a background tracking spreadsheet and a standalone pinout reference were excluded. Captions describe visible content without inventing measurements or a successful validation result.
+No build step. Publish main at root. Analytics remains off until an owner-controlled GoatCounter endpoint is configured.
