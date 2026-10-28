@@ -9,3 +9,7 @@ The hero uses NullMotion's MIT-licensed HyperFrames scene builder, adapted with 
 Motion supports pause/resume and reduced motion. It pauses offscreen and when the page is hidden; real fallback imagery remains if scripts cannot initialize. focus.css controls the shared dark interface, focus.js opens disclosures for deep links, and motion.mjs composes the hero sequence and restrained entrances. Existing bench and lab scripts remain functional.
 
 No build step. Publish main at root. Analytics remains off until an owner-controlled GoatCounter endpoint is configured.
+
+## Desktop Companion
+
+A recorded AI-assisted personal project appears after the engineering captures. See [project notes](projects/desktop-companion/README.md) for viewing instructions, attribution, and the website player implementation.
